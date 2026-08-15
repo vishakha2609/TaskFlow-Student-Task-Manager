@@ -2,8 +2,6 @@
 
 > **A modern, responsive task management dashboard designed to help students organize tasks, manage deadlines, track productivity, and stay consistent with their goals.**
 
-![TaskFlow Banner](https://via.placeholder.com/1200x400?text=TaskFlow+%7C+Student+Task+Manager)
-
 ## ✨ Overview
 
 **TaskFlow** is a student-focused task management web application built to make everyday academic planning simpler and more organized.
@@ -208,7 +206,7 @@ Possible future versions could include:
 
 ## 🌐 Live Demo
 
-🔗 **Live Demo:** `YOUR-NETLIFY-LINK-HERE`
+🔗 **Live Demo:** taskflow-studenttaskmanager.netlify.app
 
 ---
 
