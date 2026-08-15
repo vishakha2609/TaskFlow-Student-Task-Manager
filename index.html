@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Task Manager</title>
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-left">
+                <i class="fa-solid fa-bars" id="hamburger"></i>
+                <i class="fa-solid fa-layer-group"></i>
+                <div class="name">TaskFlow</div>
+            </div>
+            <div class="nav-center">
+                <div class="search-bar">
+                    <input type="text" id="search-task" placeholder="Search..">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <div class="suggestions"></div>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="notification-wrapper">
+                <i id="notif" class="fa-solid fa-bell"></i>
+                <span id="notification-count">0</span>
+
+                <div class="notification-panel" id="notification-panel">
+
+                    <div class="notification-panel-head">
+                        <strong>Notifications</strong>
+                        <button id="clear-notifications">Clear All</button>
+                    </div>
+
+                    <div id="notification-list">
+                        <!-- JavaScript will add notifications here -->
+                    </div>
+
+                </div>
+            </div>
+
+                <div class="profile">
+                    <i class="fa-solid fa-circle-user"></i>
+                    <span id="profile-name"></span>
+                    <button class="profile-close" aria-label="Close profile">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    
+    <section class="hero">
+        <aside class="sidebar">
+            <div class="sidebar-top">
+                <i class="fa-solid fa-bars-progress"></i>
+                <span class="title">Student Task Manager</span>
+            </div>
+            <ul class="sidebar-menu">
+                <li>
+                    <a class="active" data-page="dashboard">
+                <i class="fa-solid fa-chart-bar"></i>
+                Dashboard
+                    </a>
+                </li>
+
+            <li>
+                <a data-page="tasks">
+                    <i class="fa-regular fa-rectangle-list"></i>
+                    My Tasks
+                </a>
+            </li>
+
+            <li>
+                <a data-page="schedule">
+                    <i class="fa-regular fa-calendar-check"></i>
+                    Schedule
+                </a>
+            </li>
+
+            <li>
+                <a data-page="analytics">
+                    <i class="fa-solid fa-chart-simple"></i>
+                    Analytics
+                </a>
+            </li>
+
+            <li>
+                <a data-page="settings">
+                    <i class="fa-solid fa-gear"></i>
+                    Settings
+                </a>
+            </li>
+        </ul>
+            <div class="sidebar-bottom">
+                <button class="add-task">New Task<i class="fa-solid fa-plus"></i></button>
+            </div>
+        </aside>
+    
+    <section class="main">
+
+        <div class="page active" id="dashboard-page">
+
+            <div class="dashboard-head">
+            <div class="dash-head-left">
+                <span class="greeting">Good Morning, <span id="greeting-name"></span>!</span>
+                <span class="subtitle">Stay productive and complete your tasks.</span>
+            </div>
+            <div class="dash-head-right">
+                <span class="date">July 26, 2026</span>
+                <span class="label">Today</span>
+            </div>
+            </div>
+
+            <!--dashboard cards-->
+            <div class="cards">
+                <div class="task-card">
+                    <div class="card-name">Total Tasks<p class="count" id="total-count">8</p></div>
+                    <div class="logo"><i class="fa-solid fa-list-ol"></i></div>
+                </div>
+                <div class="task-card">
+                    <div class="card-name">Pending<p class="count" id="pending-count">6</p></div>
+                    <div class="logo"><i class="fa-solid fa-hourglass-half"></i></div>
+                </div>
+                <div class="task-card">
+                    <div class="card-name">Completed<p class="count" id="completed-count">2</p></div>
+                    <div class="logo" id="completed"><i class="fa-solid fa-square-check"></i></div>
+                </div>
+                <div class="task-card">
+                    <div class="card-name">Overdue<p class="count" id="overdue-count">2</p></div>
+                    <div class="logo" id="overdue-logo"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                </div>
+            </div>
+
+            <!--task manager-->
+            <div class="task-manager">
+                <!--recent tasks-->
+                <div class = "recent-tasks">
+                    <div class="stat-card-title">
+                        Recent Tasks
+                        <i class="fa-solid fa-clipboard-list"></i> 
+                    </div>
+                    <ul class="tasks" >
+                        <li>Complete DBMS Assignment</li>
+                        <li>Finish JavaScript Project</li>
+                        <li>Study DSA Arrays</li>
+                        <li>Submit Resume</li>
+                    </ul>
+                </div>
+
+                <!--Quick Add Task-->
+                <div class="quick-add">
+                    <div class="add-title">Quick Add Task <i class="fa-solid fa-circle-plus"></i></div>
+                    <div class="fields">
+                        <div class="title-field">
+                            Task Title
+                            <input class= "enter-title" id="task-title" type="text" placeholder="e.g Study DSA..">
+                        </div>
+                        <div class="subject-name">
+                            Subject
+                            <input class="enter-subject" id="task-subject" type="text" placeholder="e.g DBMS">
+                        </div>
+                        <div class="priority">
+                            <label for="task-priority">Priority</label>
+                            <select class="prior-select" id="task-priority">
+                                <option value="high">High Priority</option>
+                                <option value="medium">Medium</option>
+                                <option value="low">Low Priority</option>
+                            </select>
+                        </div>
+                        <div class="due-date">
+                            Due Date
+                            <input class="select-date" id="task-date" type="date" >
+                        </div>
+                    </div>
+                    <div class="btn-add">
+                            <button class="task-add-btn" id="add-btn">ADD Task<i class="fa-solid fa-plus"></i></button>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ==== OVERDUE TASKS ==== -->
+            <div class="overdue-tasks">
+                    <div class="overdue-head">
+                        <div>
+                            <span class="overdue-title">Overdue Tasks</span>
+                            <span class="overdue-subtitle">Tasks that need your attention</span>
+                        </div>
+
+                        <div class="overdue-count">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            <span id="overdue-task-count">0 Overdue</span>
+                        </div>
+                    </div>
+
+                    <div class="overdue-task-list">
+                        <!-- JavaScript will add overdue tasks here -->
+                    </div>
+                </div>
+            <hr>
+            <!--tasks-->
+            <div class="task-items">
+                <!-- we comitted it later beacuse its a static card which shoule be removed while implementing js -->
+                <!-- <div class="task-item">
+                    <div class="top-item">
+                        <div class="task-name">Complete DBMS Assignment</div>
+                    </div>
+                    <div class="middle-item">
+                        <div class="subject"><strong>Subject:</strong> DBMS </div>
+                        <div class="priority">Priority : High </div>
+                        <div class="task-due-date">Due Date : 2026-07-29</div>
+                        <div class="current-status">
+                            <div class="status">[ Pending ]</div>
+                        </div>
+                    </div>
+                    <div class="bottom-item">
+                        <button class="edit">Edit<i class="fa-solid fa-pen-to-square"></i></button>
+                        <button class="delete">Delete<i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </div> -->
+
+            </div>
+        
+
+        </div>
+
+
+        <div class="page" id="tasks-page"> 
+            <div class="task-page-head">
+                <div class="task-heading">My Tasks <span class="total-count-task">Total Tasks - 12</span></div>
+                <div class="task-subtitle">Manage, organize and track all your tasks.</div>
+            </div>
+        
+            <div class="task-options">
+
+                <div class="filter-task">
+                    <label for="filter-option"><i class="fa-solid fa-filter"></i>Filter</label>
+                    <select class="select-filter" id="filter-option">
+                        <option value="all">All Tasks</option>
+                        <option value="pending">Pending</option>
+                        <option value="completed">Completed</option>
+                        <option value="high">High Priority</option>
+                        <option value="medium">Medium Priority</option>
+                        <option value="low">Low Priority</option>
+                    </select>
+                </div>
+
+                <div class="sort-task">
+                    <label for="sort-option"><i class="fa-solid fa-sort"></i>Sort</label>
+                    <select class="select-sort" id="sort-option">
+                        <option value="newest">Newest</option>
+                        <option value="oldest">Oldest</option>
+                        <option value="priority">Priority</option>
+                        <option value="due-date" >Due Date</option>
+                    </select>
+                </div>
+        </div>
+
+        <div class="all-task-cards"></div>
+    </div>
+
+    <!--Schedule Page-->
+
+        <div class="page" id="schedule-page">
+
+            <div class="schedule-page-head">
+                <div class="schedule-heading">Schedule</div>
+                <div class="schedule-subtitle">
+                    Manage your daily schedule and upcoming deadlines.
+                </div>
+            </div>
+
+            <div class="schedule-main">
+                <!-- ==== Calendar==== -->
+                <div class="schedule-calendar">
+                    <div class="cal-head">
+                        <span>Calendar</span>
+                        <i class="fa-regular fa-calendar-days"></i>
+                    </div>
+                    <div class="calendar-header">
+                        <button class="prev">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+                        <div class="month-year">
+                            August 2026
+                        </div>
+                        <button class="next">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <div class="weekdays">
+                        <div>Sun</div>
+                        <div>Mon</div>
+                        <div>Tue</div>
+                        <div>Wed</div>
+                        <div>Thu</div>
+                        <div>Fri</div>
+                        <div>Sat</div>
+                    </div>
+                    <div class="calendar-days">
+                        <!-- JavaScript -->
+                    </div>
+                </div>
+
+                <!-- ==== Today's Schedule ==== -->
+
+                <div class="todays-schedule">
+                    <div class="today-head">
+                        <span>Today's Schedule</span>
+                        <i class="fa-solid fa-list-check"></i>
+                    </div>
+                    <div class="today-date">
+                        6 August 2026
+                    </div>
+                    <div class="today-task-list">
+                        <!-- JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- === Upcoming Deadlines=== -->
+            <div class="upcoming-deadlines">
+                <div class="deadline-head">
+                    <span>Upcoming Deadlines</span>
+                    <i class="fa-solid fa-hourglass-half"></i>
+                </div>
+                <div class="deadline-list">
+                    <!-- JS -->
+                </div>
+            </div>
+        </div>
+      
+
+    <!-- ====================-ANALYTICS PAGE====================-->
+        <div class="page" id="analytics-page">
+            <div class="analytics-page-head">
+                <div class="analytics-heading">Analytics</div>
+                <div class="analytics-subtitle">Track your productivity, understand your progress, and stay on top of your goals.</div>
+            </div>
+
+            <div class="productivity-overview">
+
+                <div class="productivity-title">PRODUCTIVITY OVERVIEW</div>
+
+                <div class="track-rates">
+                    <div class="completion-rate">
+                        <div class="completion-percent-icon">
+                            <div class="completion-rate-percent">72%</div>
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <div class="completion-rate-label">Overall Completion Rate</div>
+                    </div>
+
+                    <div class="on-time-completion-rate">
+                        <div class="on-time-percent-icon">
+                            <div class="on-time-completion-rate-percent">63%</div>
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                        <div class="on-time-completion-rate-label">On-Time Completion</div>
+                    </div>
+
+                    <div class="average-tasks-completed">
+                        <div class="avg-task-icon">
+                            <div class="average-rate">3.2</div>
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+                        <div class="average-rate-label">Avg.Tasks / Day</div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="task-progress">
+                <div class="progress-header">
+                    <div>
+                        <div class="progress-title">Task Progress</div>
+                        <div class="progress-subtitle">
+                            See how your productivity is changing over time.
+                        </div>
+                    </div>
+
+                    <select class="progress-period" id="progress-period">
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                    </select>
+                </div>
+
+                <div class="progress-chart">
+                    <div class="chart-title">
+                        Completion Progress
+                    </div>
+
+                    <div class="chart-area">
+                        <!-- Chart will be generated with JavaScript -->
+                    </div>
+                </div>
+
+                <div class="progress-insight">
+                    <div class="best-day">
+                        <span>Best Day</span>
+                        <strong>Friday</strong>
+                    </div>
+
+                    <div class="progress-trend">
+                        <span>Trend</span>
+                        <strong>↑ Improving</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="priority-analysis">
+
+                <div class="priority-analysis-header">
+                    <div class="priority-title">PRIORITY ANALYSIS</div>
+                    <div class="priority-subtitle">
+                        See how your workload is distributed across priorities.
+                    </div>
+                </div>
+
+                <div class="priority-analysis-content">
+ 
+                    <!-- Donut Chart -->
+                    <div class="priority-chart-container">
+
+                        <div class="priority-donut">
+                            <div class="donut-center">
+                                <div class="priority-total">0</div>
+                                <span>Total Tasks</span>
+                            </div>
+                        </div>
+
+                </div>
+
+                <!-- Priority Details -->
+                <div class="priority-details">
+
+                    <div class="priority-item">
+                        <div class="priority-info">
+                            <span class="priority-dot high"></span>
+                            <span>High Priority</span>
+                        </div>
+                        <strong class="high-count">0</strong>
+                    </div>
+
+                    <div class="priority-item">
+                        <div class="priority-info">
+                            <span class="priority-dot medium"></span>
+                            <span>Medium Priority</span>
+                        </div>
+                        <strong class="medium-count">0</strong>
+                    </div>
+
+                    <div class="priority-item">
+                        <div class="priority-info">
+                            <span class="priority-dot low"></span>
+                            <span>Low Priority</span>
+                        </div>
+                        <strong class="low-count">0</strong>
+                    </div>
+
+                    <div class="priority-insight">
+                        <i class="fa-solid fa-lightbulb"></i>
+
+                        <div>
+                            <span>Most Common Priority</span>
+                            <strong class="most-common-priority">
+                                No data yet
+                            </strong>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+            <div class="subject-wise-performance">
+
+                <div class="subject-performance-header">
+                    <div class="subject-performance-title">
+                        SUBJECT-WISE PERFORMANCE
+                    </div>
+
+                    <div class="subject-performance-subtitle">
+                        See how you're performing across different subjects.
+                    </div>
+                </div>
+
+                <div class="subject-performance-content">
+
+                    <div class="subject-chart">
+                        <!-- JS will create subject bars here -->
+                    </div>
+
+                    <div class="best-subject">
+                        <i class="fa-solid fa-trophy"></i>
+
+                        <div class="best-subject-info">
+                            <span>Best Performing Subject</span>
+                            <strong class="best-subject-name">
+                                No data yet
+                            </strong>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        
+        <!-- === SETTINGS PAGE === -->
+        
+        <div class="page" id="settings-page">
+            
+            <!-- SETTINGS HEADER -->
+            <div class="settings-page-head">
+                <div class="settings-heading">Settings</div>
+                <div class="settings-subtitle">
+                    Customize your TaskFlow experience and manage your preferences.             
+                </div>
+            </div>
+
+            <!-- === PROFILE === -->
+
+            <div class="settings-section">
+
+                <div class="settings-section-head">
+                    <div>
+                        <div class="settings-section-title">Profile</div>
+                        <div class="settings-section-subtitle">
+                            Manage your profile information.
+                        </div>
+                    </div>
+
+                    <i class="fa-solid fa-user"></i>
+                </div>
+
+
+                <div class="settings-option profile-option">
+
+                    <div class="settings-option-info">
+                        <div class="option-title">Profile Name</div>
+                        <div class="option-description">
+                            This name will appear across your TaskFlow dashboard.
+                        </div>
+                    </div>
+
+                    <div class="profile-name-control">
+                        <input
+                            type="text"
+                            id="profile-name-input"
+                            placeholder="Enter your name"
+                        >
+
+                        <button id="save-profile-name">
+                            Save
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- === NOTIFICATIONS === -->
+
+            <div class="settings-section">
+
+                <div class="settings-section-head">
+                    <div>
+                        <div class="settings-section-title">Notifications</div>
+                        <div class="settings-section-subtitle">
+                            Choose which notifications you want to receive.
+                        </div>
+                    </div>
+
+                    <i class="fa-solid fa-bell"></i>
+                </div>
+
+
+                <!-- Master Notification -->
+                <div class="settings-option">
+
+                    <div class="settings-option-info">
+                        <div class="option-title">Enable Notifications</div>
+                        <div class="option-description">
+                            Turn TaskFlow notifications on or off.
+                        </div>
+                    </div>
+
+                    <label class="toggle">
+                        <input type="checkbox" id="notification-toggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+
+                </div>
+
+
+                <!-- Deadline Alerts -->
+                <div class="settings-option">
+
+                    <div class="settings-option-info">
+                        <div class="option-title">Deadline Alerts</div>
+                        <div class="option-description">
+                            Get alerts for overdue tasks and tasks due today.
+                        </div>
+                    </div>
+
+                    <label class="toggle">
+                        <input type="checkbox" id="deadline-alert-toggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+
+                </div>
+
+
+                <!-- Daily Progress -->
+                <div class="settings-option">
+
+                    <div class="settings-option-info">
+                        <div class="option-title">Daily Progress</div>
+                        <div class="option-description">
+                            Receive a daily summary of your productivity.
+                        </div>
+                    </div>
+
+                    <label class="toggle">
+                        <input type="checkbox" id="daily-progress-toggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+
+                </div>
+
+
+                <!-- Daily Streak -->
+                <div class="settings-option">
+
+                    <div class="settings-option-info">
+                        <div class="option-title">Daily Streak</div>
+                        <div class="option-description">
+                            Get updates about your task completion streak.
+                        </div>
+                    </div>
+
+                    <label class="toggle">
+                        <input type="checkbox" id="daily-streak-toggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- === TASK PREFERENCES === -->
+
+
+            <div class="settings-section">
+
+                <div class="settings-section-head">
+                    <div>
+                        <div class="settings-section-title">Task Preferences</div>
+                        <div class="settings-section-subtitle">
+                            Set your default task preferences.
+                        </div>
+                    </div>
+
+                    <i class="fa-solid fa-list-check"></i>
+                </div>
+
+
+                <!-- Default Priority -->
+                <div class="settings-option">
+
+                    <div class="settings-option-info">
+                        <div class="option-title">Default Priority</div>
+
+                        <div class="option-description">
+                            Choose the priority used when creating a new task.
+                        </div>
+                    </div>
+
+                    <select id="default-priority">
+                        <option value="high">High</option>
+                        <option value="medium">Medium</option>
+                        <option value="low">Low</option>
+                    </select>
+
+                </div>
+
+
+                <!-- Default Filter -->
+                <div class="settings-option">
+
+                    <div class="settings-option-info">
+                        <div class="option-title">Default Filter</div>
+
+                        <div class="option-description">
+                            Choose which tasks should be displayed by default.
+                        </div>
+                    </div>
+
+                    <select id="default-filter">
+                        <option value="all">All Tasks</option>
+                        <option value="pending">Pending</option>
+                        <option value="completed">Completed</option>
+                        <option value="high">High Priority</option>
+                        <option value="medium">Medium Priority</option>
+                        <option value="low">Low Priority</option>
+                    </select>
+
+                </div>
+
+
+                <!-- Default Sort -->
+                <div class="settings-option">
+
+                    <div class="settings-option-info">
+                        <div class="option-title">Default Sort</div>
+
+                        <div class="option-description">
+                            Choose how your tasks should be ordered by default.
+                        </div>
+                    </div>
+
+                    <select id="default-sort">
+                        <option value="newest">Newest</option>
+                        <option value="oldest">Oldest</option>
+                        <option value="priority">Priority</option>
+                        <option value="due-date">Due Date</option>
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- === DATA & ACCOUNT === -->
+
+            <div class="settings-section">
+
+                <div class="settings-section-head">
+                    <div>
+                        <div class="settings-section-title">Data & Account</div>
+                        <div class="settings-section-subtitle">
+                            Manage your TaskFlow data.
+                        </div>
+                    </div>
+
+                    <i class="fa-solid fa-database"></i>
+                </div>
+
+
+                <!-- Clear Tasks -->
+                <div class="settings-option">
+
+                    <div class="settings-option-info">
+                        <div class="option-title">Clear All Tasks</div>
+                        <div class="option-description">
+                            Permanently remove all tasks from TaskFlow.
+                        </div>
+                    </div>
+
+                    <button class="danger-btn" id="clear-tasks">
+                        Clear Tasks
+                    </button>
+
+                </div>
+
+
+                <!-- Reset Settings -->
+                <div class="settings-option">
+
+                    <div class="settings-option-info">
+                        <div class="option-title">Reset Settings</div>
+                        <div class="option-description">
+                            Restore your settings to their default values.
+                        </div>
+                    </div>
+
+                    <button class="reset-btn" id="reset-settings">
+                        Reset
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+        
+    </section>
+
+
+    <div class="profile-setup" id="profile-setup">
+
+        <div class="profile-setup-box">
+
+            <div class="profile-setup-icon">
+                <i class="fa-solid fa-circle-user"></i>
+            </div>
+
+            <h2>Welcome to TaskFlow!</h2>
+            <p>Let's set up your profile.</p>
+
+            <label for="settings-profile-name-input">Your Name</label>
+
+            <input type="text" id="profile-name-input" placeholder="Enter your name...">
+            <button id="save-profile-btn">Save Profile</button>
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <script src="script.js"></script>
+
+
+    
+</body>
+</html>
+
