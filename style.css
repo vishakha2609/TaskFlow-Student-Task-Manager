@@ -5526,3 +5526,32 @@ button:active {
         transition-duration: 0.01ms !important;
     }
 }
+
+/* =========================================================
+   MOBILE PAGE CONTENT - BOTTOM SPACE / SCROLL FIX
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .main {
+        height: auto;
+        min-height: calc(100dvh - 72px);
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        box-sizing: border-box;
+
+        padding-bottom: 80px;
+    }
+
+    .page {
+        min-height: calc(100dvh - 72px);
+        height: auto;
+
+        overflow: visible;
+
+        box-sizing: border-box;
+
+        padding-bottom: 40px;
+    }
+}
