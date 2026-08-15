@@ -619,6 +619,9 @@ sortTask.addEventListener("change", function(){
 
 
 add_task.addEventListener("click", function () {
+    if (window.innerWidth <= 768) {
+        sidebar.classList.remove("open");
+    }
     // Remove active from all sidebar links
     page_links.forEach(function(link){
         link.classList.remove("active");
